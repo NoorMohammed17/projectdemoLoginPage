@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Account Page 2</title>
+    <style>
+        * {
+            margin: 0px;
+            padding: 0px;
+            box-sizing: border-box;
+        }
+
+        #container {
+
+            width: 27%;
+            height: auto;
+            margin: auto;
+            font-family: 'Source Sans Pro', sans-serif;
+            
+            padding: 50px 30px 60px 30px;
+            margin-top: 60px;
+            font-size: 13px;
+
+        }
+
+        #signin1 {
+            font-size: 22px;
+            font-weight: 400;
+            margin-bottom: 25px;
+        }
+
+        #text {
+            margin-bottom: 20px;
+        }
+
+        label {
+            font-weight: 400;
+        }
+
+        #email,#firstname,#lastname,#password {
+            width: 100%;
+            height: 40px;
+            margin-top:10px;
+            margin-bottom: 20px;
+        }
+
+        #button {
+            width: 100%;
+            height: 40px;
+            background-color: black;
+            color: white;
+        }
+
+        a {
+            color: black;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="container">
+
+        <h2 id="signin1">Create Account</h2>
+        <p id="text">Required</p>
+        <p>Check out faster</p>
+        <p><span id="icon" style='font-size:30px;'>&#xF5EA;</span>
+            Track orders easily</p>
+        <p>Use one sign-in across our brands</p>
+        <form>
+            <label for="">Email</label><br>
+            <p><span id="emailId"></span><a href=""> Edit</a> </p>
+            <!-- <input type="email" placeholder="" id="email"><br> -->
+            <label for="">First Name</label><br>
+            <input type="text" placeholder="" id="firstname"><br>
+            <label for="">Last Name</label><br>
+            <input type="text" placeholder="" id="lastname"><br>
+
+            <label for=""> Create Password</label><br>
+            <input type="password" placeholder=""  id="password"><br>
+            <p>By tapping Next, you agree to our <a href="">Privacy Policy</a> and <a href=""> Terms & Conditions.</a> </p><br><br>
+            <input type="submit" id="button" value="Create Account">
+        </form>
+    </div>
+
+
+</body>
+
+</html>
+<script>
+    let form=document.querySelector("form");
+    form.addEventListener("submit",myfunction);
+    let userEmailDatafromLS = JSON.parse(localStorage.getItem("userEmailData")) || [];
+    let userData = JSON.parse(localStorage.getItem("userData")) || [];
+    function myfunction(event){
+        event.preventDefault();
+        // let EmailId=document.querySelector("#emailId").innerText=userEmailDatafromLS.email;
+        console.log(userEmailDatafromLS);
+        
+        let dataObj = {
+            // email:form.userEmailDatafromLS,
+            firstname:form.firstname.value,
+            lastname :form.lastname.value,
+            password:form.password.value,
+           
+        }
+        if(checkEmails(dataObj.email)===true){
+            userData.push(dataObj);
+            localStorage.setItem("userData",JSON.stringify(userData));
+            
+            window.location.href="loginpage.html";
+        }else{
+            alert("Account Already Exists");
+        }
+    };
+
+    function checkEmails(email){
+        let filter = userData.filter(function(elem){
+            return email === elem.email;
+        })
+        if(filter.lenght>0){
+            return false;
+        }else{
+            return true;
+        }
+    }
+</script>
